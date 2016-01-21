@@ -17,7 +17,7 @@
         this.set('n', params.length);
       }
     },
-
+      //test to see git push
     rows: function() {
       return _(_.range(this.get('n'))).map(function(rowIndex) {
         return this.get(rowIndex);
@@ -79,12 +79,36 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var result = false;
+      var row = this.get(rowIndex);
+      var count = 0;
+      _.each(row, function(value) {
+        if(value) {
+          count++;
+        }
+        if(count >= 2) {
+          return result = true;
+        }
+      });
+      return result;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      var result = false;
+      var context = this;
+      var checkRows = function(index) {
+        var rowCheck = context.get(index);
+        if(rowCheck) {
+          result = context.hasRowConflictAt(index);
+          if(!result) {
+            checkRows(index + 1);
+          }
+        }
+      }
+        
+      checkRows(0);
+      return result;
     },
 
 
@@ -94,12 +118,34 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var allRows = this.rows();
+      var resultsArr = [];
+      _.each(allRows, function(value) {
+        resultsArr.push(value[colIndex]);
+      });
+      var result = false;
+      var count = 0;
+      _.each(resultsArr, function(value) {
+        if(value) {
+          count++;
+        }
+        if(count >= 2) {
+          return result = true;
+        }
+      });
+      return result;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var result = false;
+      var rowCount = this.rows();
+      for(var i = 0; i < rowCount.length; i++) {
+        if (result = this.hasColConflictAt(i)) {
+          return result;
+        }
+      }
+      return result;
     },
 
 
