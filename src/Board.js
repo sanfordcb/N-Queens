@@ -179,9 +179,9 @@
     hasAnyMajorDiagonalConflicts: function(n) {
       var rowCount = this.rows();
       var n = rowCount.length;
-      var result;
+      var result = false;
       
-      for(var i = -n + 1; i < n-1; i++) {
+      for(var i = -n + 2; i < n-1; i++) {
         //this._isInBounds(0, i){
           //result = hasAnyMajorDiagonalConflicts(rowCount[0][i+1])
        // }
@@ -222,9 +222,9 @@
     hasAnyMinorDiagonalConflicts: function(n) {
       var rowCount = this.rows();
       var n = rowCount.length;
-      var result;
+      var result = false;
 
-      for(var i = (n*2)    -2; i > 0; i--) {
+      for(var i = n - 2 + n; i > 0; i--) {
         result = this.hasMinorDiagonalConflictAt(i);
         if(result) {
           break;
