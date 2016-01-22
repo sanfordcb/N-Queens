@@ -176,12 +176,12 @@
     },
 
     // test if any major diagonals on this board contain conflicts
-    hasAnyMajorDiagonalConflicts: function() {
-      
+    hasAnyMajorDiagonalConflicts: function(n) {
       var rowCount = this.rows();
+      var n = rowCount.length;
       var result;
       
-      for(var i = -2; i < rowCount[0].length-1; i++) {
+      for(var i = -n + 1; i < n-1; i++) {
         //this._isInBounds(0, i){
           //result = hasAnyMajorDiagonalConflicts(rowCount[0][i+1])
        // }
@@ -219,11 +219,12 @@
     },
 
     // test if any minor diagonals on this board contain conflicts
-    hasAnyMinorDiagonalConflicts: function() {
+    hasAnyMinorDiagonalConflicts: function(n) {
       var rowCount = this.rows();
+      var n = rowCount.length;
       var result;
 
-      for(var i = rowCount.length + 1; i > 0; i--) {
+      for(var i = (n*2)    -2; i > 0; i--) {
         result = this.hasMinorDiagonalConflictAt(i);
         if(result) {
           break;
